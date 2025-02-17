@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://jyh7ewsunesv"]
+
+[ext_resource type="Script" path="res://scenes/ui/GameUI.cs" id="1_wyu1b"]
+[ext_resource type="Resource" uid="uid://by1xyqkwyb2eb" path="res://resources/building/tower.tres" id="2_7jceh"]
+[ext_resource type="Resource" uid="uid://cbluc2kej2wog" path="res://resources/building/village.tres" id="3_t6co8"]
+[ext_resource type="PackedScene" uid="uid://c4u3rjmircdsn" path="res://scenes/ui/BuildingSection.tscn" id="4_0dsdy"]
+[ext_resource type="Texture2D" uid="uid://t0rf5mfsqxnj" path="res://assests/ui/wood_icon.png" id="5_13yoh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xm4j2"]
+atlas = ExtResource("5_13yoh")
+region = Rect2(39, 72, 32, 28)
+
+[node name="GameUI" type="CanvasLayer"]
+script = ExtResource("1_wyu1b")
+buildingResources = Array[Object]([ExtResource("3_t6co8"), ExtResource("2_7jceh")])
+buildingSectionScene = ExtResource("4_0dsdy")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_xm4j2")
+stretch_mode = 3
+
+[node name="ResourceLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.619608, 0.529412, 0.462745, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 48
+text = "4"
+
+[node name="BuildingSectionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16

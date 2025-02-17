@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b53w06moepa0u"]
+
+[ext_resource type="PackedScene" uid="uid://kpmu4r416qdu" path="res://scenes/component/BuildingComponent.tscn" id="1_ad1yj"]
+[ext_resource type="Texture2D" uid="uid://bn04jviuques" path="res://assests/buildings/castle_white.png" id="2_m0xyv"]
+
+[node name="Base" type="Node2D"]
+y_sort_enabled = true
+
+[node name="BuildingComponent" parent="." instance=ExtResource("1_ad1yj")]
+buildingResourcePath = "res://resources/building/base.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(160, 96)
+texture = ExtResource("2_m0xyv")
+centered = false
+offset = Vector2(-160, -224)

@@ -1,0 +1,71 @@
+using System.Collections.Generic;
+using System.Linq;
+using Game.Autoload;
+using Game.Resources.Building;
+using Godot;
+
+namespace Game.Component;
+
+public partial class BuildingComponent : Node2D
+{
+	[Export(PropertyHint.File, "*.tres")]
+	private string buildingResourcePath;
+
+	public BuildingResource BuildingResource { get; private set; }
+
+	private HashSet<Vector2I> occupiedTiles = new();
+
+	public override void _Ready()
+	{
+		if (buildingResourcePath != null)
+		{
+			BuildingResource = GD.Load<BuildingResource>(buildingResourcePath);
+		}
+		AddToGroup(nameof(BuildingComponent));
+		//wait to emit the signal after other functions are done
+		Callable.From(Initialize).CallDeferred();
+	}
+
+	public Vector2I	GetGridCellPosition()
+	{
+		var gridPostion = GlobalPosition / 64;
+		gridPostion = gridPostion.Floor();
+		return new Vector2I((int)gridPostion.X, (int)gridPostion.Y);
+	}
+
+	public HashSet<Vector2I> GetOccupiedCellPositions()
+	{
+		return occupiedTiles.ToHashSet();
+	}
+
+	public bool IsTileInBuildngArea(Vector2I tilePosition)
+	{
+		return occupiedTiles.Contains(tilePosition);
+	}
+
+	public void Destroy()
+	{
+		GameEvents.EmitBuildingDestroyed(this);
+		//find the root of the scene this node is apart of and destroy it along with its children nodes.
+		Owner.QueueFree();
+	}
+
+	private void CalculateOccupiedCellPositions()
+	{
+		var gridPostion = GetGridCellPosition();
+		for (int x = gridPostion.X; x < gridPostion.X + BuildingResource.Dimensions.X; x++)
+		{
+			for(int y = gridPostion.Y; y < gridPostion.Y + BuildingResource.Dimensions.Y; y++)
+			{
+				//add the calculated tiles to the hashset list.
+				occupiedTiles.Add(new Vector2I(x, y));
+			}
+		}
+	}
+
+	private void Initialize()
+	{
+		CalculateOccupiedCellPositions();
+		GameEvents.EmitBuildingPlaced(this);
+	}
+}

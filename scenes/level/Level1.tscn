@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=4 uid="uid://bi5v1akbgw3kk"]
+[gd_scene load_steps=6 format=4 uid="uid://bi5v1akbgw3kk"]
 
 [ext_resource type="PackedScene" uid="uid://qyjjynd5yo77" path="res://scenes/level/BaseLevel.tscn" id="1_ux0j1"]
+[ext_resource type="Resource" uid="uid://d3lyx2j435k6r" path="res://resources/level/level_01.tres" id="2_hn45p"]
 [ext_resource type="TileSet" uid="uid://cbm7g320lgtcm" path="res://resources/tiles.tres" id="2_hw1g1"]
 [ext_resource type="Resource" uid="uid://by1xyqkwyb2eb" path="res://resources/building/tower.tres" id="2_i8q5y"]
 [ext_resource type="PackedScene" uid="uid://6l5wyg6sdkbu" path="res://scenes/level/util/ElevationLayer.tscn" id="3_upm7s"]
 
 [node name="Level1" instance=ExtResource("1_ux0j1")]
+levelDefinitionResource = ExtResource("2_hn45p")
 
 [node name="GameUI" parent="." index="2"]
 buildingResources = Array[Object]([ExtResource("2_i8q5y")])

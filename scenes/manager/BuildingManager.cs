@@ -18,8 +18,6 @@ public partial class BuildingManager : Node
 	public delegate void AvailableResourceCountChangedEventHandler(int AvailableResourceCount);
 	
 	[Export]
-	private int startingResourceCount = 4;
-	[Export]
 	private GridManager gridManager;// connect the grid manager to the building manager through the UI.
 	[Export]
 	private GameUI gameUI;// connect the this through the editor as well.
@@ -40,6 +38,7 @@ public partial class BuildingManager : Node
 	private Rect2I hoveredGridArea = new(Vector2I.Zero, Vector2I.One);
 	private BuildingGhost buildingGhost;
 	private State currentState;
+	private int startingResourceCount;
 
 	private int AvailableResourceCount => startingResourceCount + currentResourceCount - currentlyUsedResourceCount;
 
@@ -106,6 +105,11 @@ public partial class BuildingManager : Node
 				buildingGhost.GlobalPosition = mouseGridPostion * 64;
 				break;
 		}
+	}
+
+	public void SetStartingResourceCount(int count)
+	{
+		startingResourceCount = count;
 	}
 
 	private void UpdateGridDisplay()

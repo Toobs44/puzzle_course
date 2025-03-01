@@ -30,7 +30,7 @@ public partial class BaseLevel : Node
 		gameUI = GetNode<GameUI>("GameUI");
 		buildingManager = GetNode<BuildingManager>("BuildingManager");
 
-		buildingManager.SetStartingResourceCount(levelDefinitionResource.StartingRescourceCount);
+		buildingManager.SetStartingResourceCount(levelDefinitionResource.StartingResourceCount);
 
 		//set the camera limit to rect used in the base terrain layer.
 		gameCamera.SetBoundingRect(baseTerrainTilemapLayer.GetUsedRect());

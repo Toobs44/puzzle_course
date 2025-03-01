@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_pnr8f")
 Id = "on_stone_no_build"
-StartingRescourceCount = 6
+StartingResourceCount = 6
 LevelScenePath = "res://scenes/level/Level3.tscn"

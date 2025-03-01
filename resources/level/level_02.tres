@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_7540s")
 Id = "new_feature_cabin"
-StartingRescourceCount = 2
+StartingResourceCount = 2
 LevelScenePath = "res://scenes/level/Level2.tscn"

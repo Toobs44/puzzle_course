@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://qyjjynd5yo77"]
+[gd_scene load_steps=12 format=3 uid="uid://qyjjynd5yo77"]
 
 [ext_resource type="Script" path="res://scenes/level/BaseLevel.cs" id="1_0j8cf"]
 [ext_resource type="TileSet" uid="uid://eifde3cn58kh" path="res://resources/highlight_tileset.tres" id="2_gd3dq"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://b0on3rktenrkb" path="res://scenes/ui/LevelCompleteScreen.tscn" id="2_s7moy"]
 [ext_resource type="TileSet" uid="uid://cbm7g320lgtcm" path="res://resources/tiles.tres" id="3_72qp8"]
 [ext_resource type="PackedScene" uid="uid://dqomqoafre07h" path="res://scenes/manager/BuildingManager.tscn" id="3_qrclh"]
-[ext_resource type="Script" path="res://resources/level/LevelDefinitionResource.cs" id="3_sb724"]
 [ext_resource type="PackedScene" uid="uid://b53w06moepa0u" path="res://scenes/building/Base.tscn" id="5_cba1d"]
 [ext_resource type="PackedScene" uid="uid://d3jwpunvyv02h" path="res://scenes/GameCamera.tscn" id="5_ug3qr"]
 [ext_resource type="PackedScene" uid="uid://jyh7ewsunesv" path="res://scenes/ui/GameUI.tscn" id="6_4t6pm"]
@@ -16,7 +15,6 @@
 [node name="BaseLevel" type="Node"]
 script = ExtResource("1_0j8cf")
 levelCompleteScreenScene = ExtResource("2_s7moy")
-levelDefinitionResource = ExtResource("3_sb724")
 
 [node name="BuildingManager" parent="." node_paths=PackedStringArray("gridManager", "gameUI", "ySortRoot") instance=ExtResource("3_qrclh")]
 gridManager = NodePath("../GridManager")
@@ -25,7 +23,7 @@ ySortRoot = NodePath("../YSortRoot")
 buildingGhostScene = ExtResource("8_60uun")
 
 [node name="GridManager" parent="." node_paths=PackedStringArray("highlightTilemapLayer", "baseTerrainTilemapLayer") instance=ExtResource("2_hqxdr")]
-highlightTilemapLayer = NodePath("../YSortRoot/HighlightTileMapLayer")
+highlightTilemapLayer = NodePath("../HighlightTileMapLayer")
 baseTerrainTilemapLayer = NodePath("../YSortRoot/BaseTerrainTileMapLayer")
 
 [node name="GameUI" parent="." node_paths=PackedStringArray("buildingManager") instance=ExtResource("6_4t6pm")]
@@ -52,7 +50,7 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 metadata/_edit_group_ = true
 
-[node name="HighlightTileMapLayer" type="TileMapLayer" parent="YSortRoot"]
+[node name="HighlightTileMapLayer" type="TileMapLayer" parent="."]
 modulate = Color(1, 1, 1, 0.490196)
 y_sort_enabled = true
 tile_set = ExtResource("2_gd3dq")

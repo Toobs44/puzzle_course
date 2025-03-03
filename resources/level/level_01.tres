@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_84brr")
 Id = "easy_single_option"
-StartingRescourceCount = 4
+StartingResourceCount = 4
 LevelScenePath = "res://scenes/level/Level1.tscn"

@@ -37,7 +37,7 @@ public partial class LevelManager : Node
 
 	public void ChangeToNextLevel()
 	{
-		ChangeToLevel(++currentLevelIndex);
+		ChangeToLevel(currentLevelIndex + 1);
 	}
 
 }

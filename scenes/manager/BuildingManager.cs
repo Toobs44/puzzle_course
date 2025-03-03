@@ -234,6 +234,7 @@ public partial class BuildingManager : Node
 		hoveredGridArea.Size = buildingResource.Dimensions;//is this working?
 		var buildingSprite = buildingResource.SpriteScene.Instantiate<Sprite2D>();
 		buildingGhost.AddChild(buildingSprite);
+		buildingGhost.SetDimensions(buildingResource.Dimensions);
 		toPlaceBuildingResource = buildingResource;
 		UpdateGridDisplay();
 

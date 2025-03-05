@@ -89,14 +89,6 @@ public partial class BuildingManager : Node
     public override void _Process(double delta)
 	{
 		var mouseGridPostion = gridManager.GetMouseGridCellPostion();
-		var rootCell = hoveredGridArea.Position;
-
-		if(rootCell != mouseGridPostion)
-		{
-			hoveredGridArea.Position = mouseGridPostion;
-			UpdateHoveredGridArea();
-		}
-
 		switch (currentState)
 		{
 			case State.Normal:
@@ -105,6 +97,14 @@ public partial class BuildingManager : Node
 				buildingGhost.GlobalPosition = mouseGridPostion * 64;
 				break;
 		}
+		
+		var rootCell = hoveredGridArea.Position;
+		if(rootCell != mouseGridPostion)
+		{
+			hoveredGridArea.Position = mouseGridPostion;
+			UpdateHoveredGridArea();
+		}
+
 	}
 
 	public void SetStartingResourceCount(int count)
@@ -128,6 +128,8 @@ public partial class BuildingManager : Node
 		{
 			buildingGhost.SetInvalid();
 		}
+
+		buildingGhost.DoHoverAnimation();
 	}
 
 	private void PlaceBuildingAtHoveredCellPosition()
@@ -233,7 +235,7 @@ public partial class BuildingManager : Node
 		ChangeState(State.PlaceingBuilding);
 		hoveredGridArea.Size = buildingResource.Dimensions;//is this working?
 		var buildingSprite = buildingResource.SpriteScene.Instantiate<Sprite2D>();
-		buildingGhost.AddChild(buildingSprite);
+		buildingGhost.AddSpriteNode(buildingSprite);
 		buildingGhost.SetDimensions(buildingResource.Dimensions);
 		toPlaceBuildingResource = buildingResource;
 		UpdateGridDisplay();

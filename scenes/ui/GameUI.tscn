@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://jyh7ewsunesv"]
 
-[ext_resource type="Script" path="res://scenes/ui/GameUI.cs" id="1_wyu1b"]
+[ext_resource type="Script" uid="uid://dg3xpvb370llo" path="res://scenes/ui/GameUI.cs" id="1_wyu1b"]
 [ext_resource type="Resource" uid="uid://by1xyqkwyb2eb" path="res://resources/building/tower.tres" id="2_7jceh"]
 [ext_resource type="Resource" uid="uid://cbluc2kej2wog" path="res://resources/building/village.tres" id="3_t6co8"]
 [ext_resource type="PackedScene" uid="uid://c4u3rjmircdsn" path="res://scenes/ui/BuildingSection.tscn" id="4_0dsdy"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://drt88itcymxlu"]
 
 [ext_resource type="Texture2D" uid="uid://bvlllwn7kh8sh" path="res://assests/gold_mine_inactive.png" id="1_g3rcn"]
-[ext_resource type="Script" path="res://scenes/GoldMine.cs" id="1_sxehu"]
+[ext_resource type="Script" uid="uid://c74ypo3r6gaw3" path="res://scenes/GoldMine.cs" id="1_sxehu"]
 [ext_resource type="Texture2D" uid="uid://bs21vlwc1jhw3" path="res://assests/gold_mine_active.png" id="2_fscmi"]
 
 [node name="GoldMine" type="Node2D"]

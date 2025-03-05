@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dj4yhrsxkfaje" path="res://scenes/building/Tower.tscn" id="1_ghgrj"]
 [ext_resource type="PackedScene" uid="uid://cn6jubcvf7ioh" path="res://scenes/building/sprite/TowerSprite2D.tscn" id="2_2hw6u"]
-[ext_resource type="Script" path="res://resources/building/BuildingResource.cs" id="2_tc4f8"]
+[ext_resource type="Script" uid="uid://d245mic3p42lv" path="res://resources/building/BuildingResource.cs" id="2_tc4f8"]
 
 [resource]
 script = ExtResource("2_tc4f8")

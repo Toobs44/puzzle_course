@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b0on3rktenrkb"]
 
-[ext_resource type="Script" path="res://scenes/ui/LevelCompleteScreen.cs" id="1_0h6ql"]
+[ext_resource type="Script" uid="uid://ju56pjtet6ff" path="res://scenes/ui/LevelCompleteScreen.cs" id="1_0h6ql"]
 [ext_resource type="Texture2D" uid="uid://vy5ehprssxbt" path="res://assests/ui/ribbon_red_three_slides.png" id="1_cehqs"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wvg0s"]

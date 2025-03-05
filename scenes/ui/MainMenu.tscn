@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=4 uid="uid://b4hmyvy0pimo5"]
 
 [ext_resource type="TileSet" uid="uid://cbm7g320lgtcm" path="res://resources/tiles.tres" id="1_813dy"]
-[ext_resource type="Script" path="res://scenes/ui/MainMenu.cs" id="1_q8g1l"]
+[ext_resource type="Script" uid="uid://cx5l8mdgh4d60" path="res://scenes/ui/MainMenu.cs" id="1_q8g1l"]
 [ext_resource type="PackedScene" uid="uid://6l5wyg6sdkbu" path="res://scenes/level/util/ElevationLayer.tscn" id="2_lvbcg"]
 [ext_resource type="PackedScene" uid="uid://b53w06moepa0u" path="res://scenes/building/Base.tscn" id="3_sdyro"]
 [ext_resource type="PackedScene" uid="uid://drt88itcymxlu" path="res://scenes/GoldMine.tscn" id="4_bu4wl"]

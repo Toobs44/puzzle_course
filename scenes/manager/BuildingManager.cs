@@ -4,7 +4,7 @@ using Game.Resources.Building;
 using Game.Building;
 using Game.Component;
 using System.Linq;
-using System.Collections.Generic;
+
 
 namespace Game.Manager;
 
@@ -37,6 +37,7 @@ public partial class BuildingManager : Node
 	private BuildingResource toPlaceBuildingResource;
 	private Rect2I hoveredGridArea = new(Vector2I.Zero, Vector2I.One);
 	private BuildingGhost buildingGhost;
+	private Vector2 buildingGhostDimensions;
 	private State currentState;
 	private int startingResourceCount;
 
@@ -88,12 +89,14 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
 	{
-		var mouseGridPostion = gridManager.GetMouseGridCellPostion();
+		Vector2I mouseGridPostion = Vector2I.Zero;
 		switch (currentState)
 		{
 			case State.Normal:
+				mouseGridPostion = gridManager.GetMouseGridCellPostion();
 				break;
 			case State.PlaceingBuilding:
+				mouseGridPostion = gridManager.GetMouseGridCellPostionWithDimensionOffset(buildingGhostDimensions);
 				buildingGhost.GlobalPosition = mouseGridPostion * 64;
 				break;
 		}
@@ -237,6 +240,7 @@ public partial class BuildingManager : Node
 		var buildingSprite = buildingResource.SpriteScene.Instantiate<Sprite2D>();
 		buildingGhost.AddSpriteNode(buildingSprite);
 		buildingGhost.SetDimensions(buildingResource.Dimensions);
+		buildingGhostDimensions = buildingResource.Dimensions;
 		toPlaceBuildingResource = buildingResource;
 		UpdateGridDisplay();
 

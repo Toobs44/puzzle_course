@@ -132,6 +132,16 @@ public partial class GridManager : Node
 		highlightTilemapLayer.Clear();
 	}
 
+	public Vector2I GetMouseGridCellPostionWithDimensionOffset(Vector2 dimensions)
+	{		
+		//dividing to reintroduce a nonIntager value for more accuracy.
+		var mouseGridPosition = highlightTilemapLayer.GetGlobalMousePosition() / 64;
+		mouseGridPosition -= dimensions / 2;// wouldnt this offset method only work if the dimensions of the building is 2x2?
+		//Instead of flooring, its rounded to center it in the dimensions.
+		mouseGridPosition = mouseGridPosition.Round();
+		return new Vector2I((int)mouseGridPosition.X, (int)mouseGridPosition.Y);
+	}
+
 	public Vector2I GetMouseGridCellPostion()
 	{
 		var mousePosition = highlightTilemapLayer.GetGlobalMousePosition();

@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://btpm65vsxi6dd"]
+[gd_scene load_steps=4 format=3 uid="uid://btpm65vsxi6dd"]
 
+[ext_resource type="PackedScene" uid="uid://vkppnh6dp3to" path="res://scenes/component/BuildingAnimatorComponent.tscn" id="2_aht71"]
 [ext_resource type="PackedScene" uid="uid://tnf8qq043y0o" path="res://scenes/building/sprite/VillageSprite2D.tscn" id="2_fgmq4"]
 [ext_resource type="PackedScene" uid="uid://kpmu4r416qdu" path="res://scenes/component/BuildingComponent.tscn" id="2_tf388"]
 
@@ -9,4 +10,6 @@ y_sort_enabled = true
 [node name="BuildingComponent" parent="." instance=ExtResource("2_tf388")]
 buildingResourcePath = "res://resources/building/village.tres"
 
-[node name="VillageSprite2D" parent="." instance=ExtResource("2_fgmq4")]
+[node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_aht71")]
+
+[node name="VillageSprite2D" parent="BuildingAnimatorComponent" instance=ExtResource("2_fgmq4")]

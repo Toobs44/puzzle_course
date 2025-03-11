@@ -7,10 +7,10 @@
 [node name="Tower" type="Node2D"]
 y_sort_enabled = true
 
-[node name="BuildingComponent" parent="." instance=ExtResource("1_6l7t8")]
+[node name="BuildingComponent" parent="." node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_6l7t8")]
 buildingResourcePath = "res://resources/building/tower.tres"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_0ag0t")]
 
 [node name="TowerSprite2D" parent="BuildingAnimatorComponent" instance=ExtResource("2_plftr")]
-y_sort_enabled = true

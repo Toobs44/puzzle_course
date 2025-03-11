@@ -10,6 +10,8 @@ public partial class BuildingComponent : Node2D
 {
 	[Export(PropertyHint.File, "*.tres")]
 	private string buildingResourcePath;
+	[Export]
+	private BuildingAnimatorComponent buildingAnimatorComponent;
 
 	public BuildingResource BuildingResource { get; private set; }
 
@@ -21,6 +23,12 @@ public partial class BuildingComponent : Node2D
 		{
 			BuildingResource = GD.Load<BuildingResource>(buildingResourcePath);
 		}
+
+		if (buildingAnimatorComponent != null)
+		{
+			buildingAnimatorComponent.DestroyAnimationFinished += OnDestroyAnimationFinished;
+		}
+
 		AddToGroup(nameof(BuildingComponent));
 		//wait to emit the signal after other functions are done
 		Callable.From(Initialize).CallDeferred();
@@ -46,8 +54,12 @@ public partial class BuildingComponent : Node2D
 	public void Destroy()
 	{
 		GameEvents.EmitBuildingDestroyed(this);
+		buildingAnimatorComponent?.PlayDestroyAnimation();//using a "Null chain"
 		//find the root of the scene this node is apart of and destroy it along with its children nodes.
-		Owner.QueueFree();
+		if (buildingAnimatorComponent == null)
+		{
+			Owner.QueueFree();
+		}
 	}
 
 	private void CalculateOccupiedCellPositions()
@@ -67,5 +79,10 @@ public partial class BuildingComponent : Node2D
 	{
 		CalculateOccupiedCellPositions();
 		GameEvents.EmitBuildingPlaced(this);
+	}
+
+	private void OnDestroyAnimationFinished()
+	{
+		Owner.QueueFree();
 	}
 }

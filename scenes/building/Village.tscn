@@ -7,9 +7,11 @@
 [node name="Village" type="Node2D"]
 y_sort_enabled = true
 
-[node name="BuildingComponent" parent="." instance=ExtResource("2_tf388")]
+[node name="BuildingComponent" parent="." node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("2_tf388")]
 buildingResourcePath = "res://resources/building/village.tres"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 
 [node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_aht71")]
 
 [node name="VillageSprite2D" parent="BuildingAnimatorComponent" instance=ExtResource("2_fgmq4")]
+y_sort_enabled = false

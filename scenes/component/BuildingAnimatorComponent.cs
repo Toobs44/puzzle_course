@@ -5,6 +5,9 @@ namespace Game.Component;
 
 public partial class BuildingAnimatorComponent : Node2D
 {
+    [Signal]
+    public delegate void DestroyAnimationFinishedEventHandler();
+
     private Tween activeTween;
     private Node2D animationRootNode;
 
@@ -40,6 +43,32 @@ public partial class BuildingAnimatorComponent : Node2D
             .SetEase(Tween.EaseType.In);
     }
 
+    public void PlayDestroyAnimation()
+    {
+        if (animationRootNode == null) return;
+
+        // ensures there isnt more than one of the same tween active.
+        if (activeTween != null && activeTween.IsValid())
+        {
+            activeTween.Kill();
+        }
+
+        activeTween = CreateTween();
+        activeTween.TweenProperty(animationRootNode, "rotation_degrees", -5, .1);
+        activeTween.TweenProperty(animationRootNode, "rotation_degrees", 5, .1);
+        activeTween.TweenProperty(animationRootNode, "rotation_degrees", -2, .1);
+        activeTween.TweenProperty(animationRootNode, "rotation_degrees", 2, .1);
+        activeTween.TweenProperty(animationRootNode, "rotation_degrees", 0, .1);
+
+        activeTween.TweenProperty(animationRootNode, "position", Vector2.Down * 300, .4)
+            .SetTrans(Tween.TransitionType.Quart)
+            .SetEase(Tween.EaseType.In);
+        activeTween.Finished += () =>
+        {
+            EmitSignal(SignalName.DestroyAnimationFinished);
+        };
+    }
+
     //This creates a new node so the Y sort is anchored and the building "fall" animation plays without flickering.
     private void SetUpNodes()
     {
@@ -50,10 +79,10 @@ public partial class BuildingAnimatorComponent : Node2D
         }
         // Removes and adds sprites to be in the proper order and position within the tree.
         RemoveChild(spriteNode);
-        Position = new Vector2(Position.X, spriteNode.Position.Y);
+        Position = new Vector2(spriteNode.Position.X, spriteNode.Position.Y);
         animationRootNode = new Node2D();
         AddChild(animationRootNode);
         animationRootNode.AddChild(spriteNode);
-        spriteNode.Position = new Vector2(spriteNode.Position.X, 0);
+        spriteNode.Position = new Vector2(0, 0);
     }
 }

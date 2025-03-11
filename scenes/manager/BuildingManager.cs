@@ -141,6 +141,8 @@ public partial class BuildingManager : Node
 		ySortRoot.AddChild(building);
 
 		building.GlobalPosition = hoveredGridArea.Position * 64;
+		building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayInAnimation();//this uses a "null chain" before calling the animation. 
+
 		currentlyUsedResourceCount += toPlaceBuildingResource.ResourceCost;
 		ChangeState(State.Normal);
 		EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);

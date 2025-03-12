@@ -151,8 +151,7 @@ public partial class BuildingManager : Node
 	private void DestroyBuildingAtHoveredCellPosition()
 	{
 		var rootCell = hoveredGridArea.Position;// Position is the upper left tile in the rect.
-		//use node group to get array of nodes and cast them as building components.
-		var buildingComponent = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
+		var buildingComponent = BuildingComponent.GetValidBuildingComponents(this)
 			//Linq filter function takes current arg and checks the list if its true.
 			//then returns the first element of that list or a null.
 			.FirstOrDefault((buildingComponent) => 

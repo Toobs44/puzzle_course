@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://vkppnh6dp3to"]
+[gd_scene load_steps=3 format=3 uid="uid://vkppnh6dp3to"]
 
 [ext_resource type="Script" uid="uid://bcgd1my4thv8n" path="res://scenes/component/BuildingAnimatorComponent.cs" id="1_jlc5h"]
+[ext_resource type="Texture2D" uid="uid://b1yeu8v7xgmk8" path="res://assests/buildings/building_mask.png" id="2_b75l6"]
 
 [node name="BuildingAnimatorComponent" type="Node2D"]
 script = ExtResource("1_jlc5h")
+maskTexture = ExtResource("2_b75l6")

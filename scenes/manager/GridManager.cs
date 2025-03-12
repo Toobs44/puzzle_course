@@ -228,17 +228,15 @@ public partial class GridManager : Node
 		EmitSignal(SignalName.GridStateUpdated);
 	}
 
-	private void RecalculateGrid(BuildingComponent excludeBuildingComponent)
+	private void RecalculateGrid()
 	{
 		occupiedTiles.Clear();//clear the grid cell that held the building.
 		validBuildableTiles.Clear();//clear all buildable tiles from the grid.
 		allTilesInBuildingRadius.Clear();
 		collectedResourseTiles.Clear();//clear resources that have been gained
 		
-		//use node group to get array of nodes and cast them as building components.
-		var buildingComponents = GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
-			//filter through the list to all elements and ignore the excluded building.
-			.Where((buildingComponent) => buildingComponent != excludeBuildingComponent);
+		
+		var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);
 
 		foreach(var buildingComponent in buildingComponents)
 		{
@@ -308,7 +306,7 @@ public partial class GridManager : Node
 
 	private void OnBuildingDestroyed(BuildingComponent buildingComponent)
 	{
-		RecalculateGrid(buildingComponent);
+		RecalculateGrid();
 	}
 
 }

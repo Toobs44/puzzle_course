@@ -14,8 +14,17 @@ public partial class BuildingComponent : Node2D
 	private BuildingAnimatorComponent buildingAnimatorComponent;
 
 	public BuildingResource BuildingResource { get; private set; }
+	public bool IsDestroying { get; private set; }
 
 	private HashSet<Vector2I> occupiedTiles = new();
+
+	public static IEnumerable<BuildingComponent> GetValidBuildingComponents(Node node)
+	{
+		//use node group to get array of nodes and cast them as building components.
+		return node.GetTree().GetNodesInGroup(nameof(BuildingComponent)).Cast<BuildingComponent>()
+		//filter through the list to all elements and ignore the excluded building.
+		.Where((BuildingComponent) => !BuildingComponent.IsDestroying);
+	}
 
 	public override void _Ready()
 	{
@@ -53,6 +62,7 @@ public partial class BuildingComponent : Node2D
 
 	public void Destroy()
 	{
+		IsDestroying = true;
 		GameEvents.EmitBuildingDestroyed(this);
 		buildingAnimatorComponent?.PlayDestroyAnimation();//using a "Null chain"
 		//find the root of the scene this node is apart of and destroy it along with its children nodes.

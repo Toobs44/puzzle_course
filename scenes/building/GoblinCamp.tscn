@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://deu4ah0pw34dk"]
+
+[ext_resource type="PackedScene" uid="uid://kpmu4r416qdu" path="res://scenes/component/BuildingComponent.tscn" id="1_ilohv"]
+[ext_resource type="PackedScene" uid="uid://vkppnh6dp3to" path="res://scenes/component/BuildingAnimatorComponent.tscn" id="2_hfat6"]
+[ext_resource type="Texture2D" uid="uid://c8ghcy13wqgac" path="res://assests/buildings/wood_tower_red.png" id="3_pch1o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7130i"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(0, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvc5i"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(256, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m75g8"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(512, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seecf"]
+atlas = ExtResource("3_pch1o")
+region = Rect2(768, 0, 256, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ugxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7130i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvc5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m75g8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seecf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="GoblinCamp" type="Node2D"]
+y_sort_enabled = true
+
+[node name="BuildingComponent" parent="." node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_ilohv")]
+buildingResourcePath = "uid://b24stqtv74aex"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
+
+[node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_hfat6")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent"]
+position = Vector2(64, 96)
+sprite_frames = SubResource("SpriteFrames_8ugxn")
+autoplay = "default"
+frame_progress = 0.812272
+centered = false
+offset = Vector2(-128, -160)

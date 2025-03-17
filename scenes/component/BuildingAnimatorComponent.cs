@@ -23,6 +23,7 @@ public partial class BuildingAnimatorComponent : Node2D
 
     public override void _Ready()
     {
+        YSortEnabled = false;//YSort is needed in the editor but will mess things up after the game starts.
         SetUpNodes();
     }
 

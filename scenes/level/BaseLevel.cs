@@ -32,7 +32,7 @@ public partial class BaseLevel : Node
 
 		buildingManager.SetStartingResourceCount(levelDefinitionResource.StartingResourceCount);
 
-		//set the camera limit to rect used in the base terrain layer.
+		//set the camera limit to rect used in the base terrain layer. For most of this game, thats the shape of the water.
 		gameCamera.SetBoundingRect(baseTerrainTilemapLayer.GetUsedRect());
 		//center camera on the base building.
 		gameCamera.CenterOnPostion(baseBuilding.GlobalPosition);

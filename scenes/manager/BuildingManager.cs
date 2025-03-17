@@ -119,6 +119,7 @@ public partial class BuildingManager : Node
 	{
 		gridManager.ClearHighlightedTiles();//clears old highlighted tiles 
 		gridManager.HighlightBuildabletiles();
+		gridManager.HighlightGoblinOccupiedTiles();
 		if(IsBuildingPlaceableAtArea(hoveredGridArea))
 		{
 			//show the highlighted area for new buildings with a radius chosen from the custom resource.

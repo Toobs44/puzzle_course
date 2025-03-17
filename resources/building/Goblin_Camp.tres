@@ -12,6 +12,6 @@ Dimensions = Vector2i(2, 2)
 ResourceCost = 0
 BuildableRadius = 0
 ResourceRadius = 0
-DangerRadius = 8
+DangerRadius = 3
 BuildingScene = ExtResource("1_uq8hx")
 metadata/_custom_type_script = "uid://d245mic3p42lv"

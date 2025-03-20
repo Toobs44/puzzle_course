@@ -118,12 +118,30 @@ public partial class BuildingManager : Node
 	private void UpdateGridDisplay()
 	{
 		gridManager.ClearHighlightedTiles();//clears old highlighted tiles 
-		gridManager.HighlightBuildabletiles();
-		gridManager.HighlightGoblinOccupiedTiles();
+
+		if (toPlaceBuildingResource.IsAttackBuilding())
+		{
+			//call these highlighted tiles in this order to see where the barracks can attack.
+			gridManager.HighlightGoblinOccupiedTiles();
+			gridManager.HighlightBuildabletiles(true);
+		}
+		else
+		{
+			gridManager.HighlightBuildabletiles();
+			gridManager.HighlightGoblinOccupiedTiles();
+		}
+
 		if(IsBuildingPlaceableAtArea(hoveredGridArea))
 		{
-			//show the highlighted area for new buildings with a radius chosen from the custom resource.
-			gridManager.HighlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
+			if (toPlaceBuildingResource.IsAttackBuilding())
+			{
+				gridManager.HighlightAttackTiles(hoveredGridArea, toPlaceBuildingResource.AttackRadius);
+			}
+			else
+			{
+				//show the highlighted area for new buildings with a radius chosen from the custom resource.
+				gridManager.HighlightExpandedBuildableTiles(hoveredGridArea, toPlaceBuildingResource.BuildableRadius);
+			}
 			// show resources on the grid highlighted within the given radius.
 			gridManager.HighlightResourcetiles(hoveredGridArea, toPlaceBuildingResource.ResourceRadius);
 			buildingGhost.SetValid();
@@ -183,8 +201,9 @@ public partial class BuildingManager : Node
 
 	private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
 	{
+		var isAttackTiles = toPlaceBuildingResource.IsAttackBuilding();
 		//go through tilePostions and get true or false for position buildable.
-		var allTilesBuildable = gridManager.IsTileAreaBuildable(tileArea);
+		var allTilesBuildable = gridManager.IsTileAreaBuildable(tileArea, isAttackTiles);
 		return allTilesBuildable && AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
 	}
 

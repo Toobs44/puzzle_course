@@ -21,6 +21,7 @@ public partial class GridManager : Node
 
 	//what is a HashSet maintain a unique list of elements
 	private HashSet<Vector2I> validBuildableTiles = new();
+	private HashSet<Vector2I> validAttackTiles = new();
 	private HashSet<Vector2I> allTilesInBuildingRadius = new();
 	private HashSet<Vector2I> collectedResourseTiles = new();
 	private HashSet<Vector2I> occupiedTiles = new();
@@ -57,19 +58,13 @@ public partial class GridManager : Node
 		return (null, false);
 	}
 
-	public bool IsTilePositionBuildable(Vector2I tilePosition)
-	{
-		//checking to see if the tile position is in the valid list.
-		return validBuildableTiles.Contains(tilePosition);
-	}
-
 	public bool IsTilePostionInAnyBuildingRadius(Vector2I tilePosition)
 	{
 		return allTilesInBuildingRadius.Contains(tilePosition);
 	}
 
 	
-	public bool IsTileAreaBuildable(Rect2I tileArea)
+	public bool IsTileAreaBuildable(Rect2I tileArea, bool isAttackTiles = false)
 	{
 		var	tiles = tileArea.ToTiles();
 
@@ -80,11 +75,21 @@ public partial class GridManager : Node
 		(TileMapLayer firstTileMaperLayer, _) = GetTileCustomData(tiles[0], IS_BUILDABLE);
 		var targetElevationLayer = firstTileMaperLayer != null? tileMapLayerToElevationLayer[firstTileMaperLayer] : null;
 
+		var tileSetToCheck = GetBuildableTileSet(isAttackTiles);
+		if (isAttackTiles)
+		{
+			//what is this doing?...
+			//By providing a new assingnment of tileSetToCheck with a new hashset 
+			// this is preventing the original reference from being modified.
+			//I think... 
+			tileSetToCheck = tileSetToCheck.Except(occupiedTiles).ToHashSet();
+		}
+
 		return tiles.All((tilePosition) =>
 		{
 			(TileMapLayer tileMapLayer, bool isBuildable) = GetTileCustomData(tilePosition, IS_BUILDABLE);
 			var elevationLayer = tileMapLayer != null ? tileMapLayerToElevationLayer[tileMapLayer] : null;
-			return isBuildable && validBuildableTiles.Contains(tilePosition) && elevationLayer == targetElevationLayer;
+			return isBuildable && tileSetToCheck.Contains(tilePosition) && elevationLayer == targetElevationLayer;
 		});
 	}
 
@@ -97,10 +102,10 @@ public partial class GridManager : Node
 		}
 	}
 
-	public void HighlightBuildabletiles()
+	public void HighlightBuildabletiles(bool isAttackTiles = false)
 	{
 		// look through the valid list of tiles
-		foreach(var tilePosition in validBuildableTiles)
+		foreach(var tilePosition in GetBuildableTileSet(isAttackTiles))
 		{
 			//highlight the tiles in the valid list
 			highlightTilemapLayer.SetCell(tilePosition, 0, Vector2I.Zero);
@@ -113,11 +118,28 @@ public partial class GridManager : Node
 		// get a list of all valid tiles then convert it to a hashset to create exclusions.
 		var validTiles = GetValidTilesInRadius(tileArea, radius).ToHashSet();
 		//Creates a list of tiles to expand Green radius but excludes already valid tiles AND tiles that are occupied.
-		var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles).Except(goblinOccupiedTiles);
+		var expandedTiles = validTiles.Except(validBuildableTiles).Except(occupiedTiles);
 		// the atlas for the Green square.
 		var atlasCoords = new Vector2I(1, 0);
 		// look through the valid list of tiles
 		foreach(var tilePosition in expandedTiles)
+		{
+			//highlight the tiles in the expanded list
+			highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
+		}
+	}
+
+	public void HighlightAttackTiles(Rect2I tileArea, int radius)
+	{
+		var buildingAreaTiles = tileArea.ToTiles();
+		var validTiles = GetValidTilesInRadius(tileArea, radius).ToHashSet()
+			.Except(validAttackTiles)
+			.Except(buildingAreaTiles);
+		
+		// the atlas for the Green square.
+		var atlasCoords = new Vector2I(1, 0);
+		// look through the valid list of tiles
+		foreach (var tilePosition in validTiles)
 		{
 			//highlight the tiles in the expanded list
 			highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
@@ -165,6 +187,11 @@ public partial class GridManager : Node
 		return new Vector2I((int)tilePostion.X, (int)tilePostion.Y);
 	}
 
+	private HashSet<Vector2I>GetBuildableTileSet(bool isAttackTiles = false)
+	{
+		return isAttackTiles ? validAttackTiles : validBuildableTiles;
+	}
+
 	private List<TileMapLayer> GetallTilemapLayers(Node2D rootNode)
 	{
 		var	tiles = new List<TileMapLayer>();
@@ -181,7 +208,7 @@ public partial class GridManager : Node
 		{
 			tiles.Add(tileMapLayer);
 		}
-		return	tiles;
+		return tiles;
 	}
 
 	//separate the distict layers to store them in the dictionary.
@@ -224,14 +251,12 @@ public partial class GridManager : Node
 		allTilesInBuildingRadius.UnionWith(allTiles);
 
 		var validTiles = GetValidTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildableRadius);
-		//union let the user add a collection of tiles to the hash instead of just one cell
-		validBuildableTiles.UnionWith(validTiles);
-		//remove any tiles that are currently occupied from the valid list of buildable tiles.
-		validBuildableTiles.ExceptWith(occupiedTiles);
-		//prevents tiles from around the goblin camp from being used
-		validBuildableTiles.ExceptWith(goblinOccupiedTiles);
-		//emit signal about the change in tiles for win condition
-		EmitSignal(SignalName.GridStateUpdated);
+		validBuildableTiles.UnionWith(validTiles);//union let the user add a collection of tiles to the hash instead of just one cell
+		validBuildableTiles.ExceptWith(occupiedTiles);//remove any tiles that are currently occupied from the valid list of buildable tiles.
+		validAttackTiles.UnionWith(validBuildableTiles);
+
+		validBuildableTiles.ExceptWith(goblinOccupiedTiles);//prevents tiles from around the goblin camp from being used
+		EmitSignal(SignalName.GridStateUpdated);//emit signal about the change in tiles for win condition
 	}
 
 	private void UpdateCollectedResourceTiles(BuildingComponent buildingComponent)
@@ -255,14 +280,17 @@ public partial class GridManager : Node
 	{
 		occupiedTiles.Clear();//clear the grid cell that held the building.
 		validBuildableTiles.Clear();//clear all buildable tiles from the grid.
+		validAttackTiles.Clear();
 		allTilesInBuildingRadius.Clear();
 		collectedResourseTiles.Clear();//clear resources that have been gained
+		goblinOccupiedTiles.Clear();
 		
 		
 		var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);
 
 		foreach(var buildingComponent in buildingComponents)
 		{
+			UpDateGoblinOccupiedTiles(buildingComponent);
 			UpDateValidBuildableTiles(buildingComponent);
 			UpdateCollectedResourceTiles(buildingComponent);
 		}

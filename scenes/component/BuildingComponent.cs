@@ -26,6 +26,12 @@ public partial class BuildingComponent : Node2D
 		.Where((BuildingComponent) => !BuildingComponent.IsDestroying);
 	}
 
+	public static IEnumerable<BuildingComponent> GetDangerBuildingComponents(Node node)
+	{
+		return GetValidBuildingComponents(node)
+			.Where((buildingComponent) => buildingComponent.BuildingResource.IsDangerBuilding());
+	}
+
 	public override void _Ready()
 	{
 		if (buildingResourcePath != null)
@@ -53,6 +59,13 @@ public partial class BuildingComponent : Node2D
 	public HashSet<Vector2I> GetOccupiedCellPositions()
 	{
 		return occupiedTiles.ToHashSet();
+	}
+
+	public Rect2I GetTileArea()
+	{
+		var rootCell = GetGridCellPosition();
+		var tileArea = new Rect2I(rootCell, BuildingResource.Dimensions);
+		return tileArea;
 	}
 
 	public bool IsTileInBuildngArea(Vector2I tilePosition)

@@ -41,6 +41,8 @@ public partial class GridManager : Node
 		//to prevent errors from freed nodes during scene changes the longer signal call is being used.
 		GameEvents.Instance.Connect(GameEvents.SignalName.BuildingPlaced, Callable.From<BuildingComponent>(OnBuildingPlaced));
 		GameEvents.Instance.Connect(GameEvents.SignalName.BuildingDestroyed, Callable.From<BuildingComponent>(OnBuildingDestroyed));
+		GameEvents.Instance.Connect(GameEvents.SignalName.BuildingEnabled, Callable.From<BuildingComponent>(OnBuildingEnabled));
+		GameEvents.Instance.Connect(GameEvents.SignalName.BuildingDisabled, Callable.From<BuildingComponent>(OnBuildingDisabled));
 		allTilemaplayers = GetallTilemapLayers(baseTerrainTilemapLayer);
 		MapTileLayerToElevationLayer();
     }
@@ -232,6 +234,8 @@ public partial class GridManager : Node
 	private void UpDateGoblinOccupiedTiles(BuildingComponent buildingComponent)
 	{
 		occupiedTiles.UnionWith(buildingComponent.GetOccupiedCellPositions());
+		if (buildingComponent.IsDisabled) return;// ignore the rest of the method if building is disabled
+
 		var tileArea = buildingComponent.GetTileArea();
 		if (buildingComponent.BuildingResource.IsDangerBuilding())
 		{
@@ -301,6 +305,8 @@ public partial class GridManager : Node
 			UpdateBuildComponentGridState(buildingComponent);
 		}
 
+		CheckGoblinCampDestruction();
+
 		//tells game to check resource count.
 		EmitSignal(SignalName.ResourceTilesUpdate, collectedResourseTiles.Count);
 		//emit signal about the change in tiles for win condition
@@ -319,7 +325,6 @@ public partial class GridManager : Node
 
 	private void CheckGoblinCampDestruction()
 	{
-		var isCampDestroyed = false;
 		var dangerBuildings = BuildingComponent.GetDangerBuildingComponents(this);
 		foreach (var building in dangerBuildings)
 		{
@@ -327,14 +332,12 @@ public partial class GridManager : Node
 			var isInsideAttackTile = tileArea.ToTiles().Any((tilePosition) => attackTiles.Contains(tilePosition));
 			if (isInsideAttackTile)
 			{
-				isCampDestroyed = true;
-				building.Destroy();
+				building.Disable();
 			} 
-		}
-
-		if (isCampDestroyed)
-		{
-			RecalculateGoblinOccupiedTiles();
+			else
+			{
+				building.Enable();
+			}
 		}
 	}
 
@@ -401,6 +404,16 @@ public partial class GridManager : Node
 	}
 
 	private void OnBuildingDestroyed(BuildingComponent buildingComponent)
+	{
+		RecalculateGrid();
+	}
+
+	private void OnBuildingEnabled(BuildingComponent buildingComponent)
+	{
+		UpdateBuildComponentGridState(buildingComponent);
+	}
+
+	private void OnBuildingDisabled(BuildingComponent buildingComponent)
 	{
 		RecalculateGrid();
 	}

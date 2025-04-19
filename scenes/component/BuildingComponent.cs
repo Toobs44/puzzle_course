@@ -15,6 +15,7 @@ public partial class BuildingComponent : Node2D
 
 	public BuildingResource BuildingResource { get; private set; }
 	public bool IsDestroying { get; private set; }
+	public bool IsDisabled { get; private set; }
 
 	private HashSet<Vector2I> occupiedTiles = new();
 
@@ -71,6 +72,20 @@ public partial class BuildingComponent : Node2D
 	public bool IsTileInBuildngArea(Vector2I tilePosition)
 	{
 		return occupiedTiles.Contains(tilePosition);
+	}
+
+	public void Disable()
+	{
+		if (IsDisabled) return;// dont waste time emitting if the building is already disabled.
+		IsDisabled = true;
+		GameEvents.EmitBuildingDisabled(this);
+	}
+
+	public void Enable()
+	{
+		if (!IsDisabled) return;// dont waste time emitting if the building is already enabled.
+		IsDisabled = false;
+		GameEvents.EmitBuildingEnabled(this);
 	}
 
 	public void Destroy()

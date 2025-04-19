@@ -11,6 +11,10 @@ public partial class GameEvents : Node
 	public delegate void BuildingPlacedEventHandler(BuildingComponent buildingComponent);
 	[Signal]
 	public delegate void BuildingDestroyedEventHandler(BuildingComponent buildingComponent);
+	[Signal]
+	public delegate void BuildingDisabledEventHandler(BuildingComponent buildingComponent);
+	[Signal]
+	public delegate void BuildingEnabledEventHandler(BuildingComponent buildingComponent);
 
     public override void _Notification(int what)
     {
@@ -28,5 +32,15 @@ public partial class GameEvents : Node
 	public static void EmitBuildingDestroyed(BuildingComponent buildingComponent)
 	{
 		Instance.EmitSignal(SignalName.BuildingDestroyed, buildingComponent);
+	}
+
+	public static void EmitBuildingDisabled(BuildingComponent buildingComponent)
+	{
+		Instance.EmitSignal(SignalName.BuildingDisabled, buildingComponent);
+	}
+
+	public static void EmitBuildingEnabled(BuildingComponent buildingComponent)
+	{
+		Instance.EmitSignal(SignalName.BuildingEnabled, buildingComponent);
 	}
 }

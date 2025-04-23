@@ -179,6 +179,8 @@ public partial class BuildingManager : Node
 			});
 		//if there is no building component(null) then leave method.
 		if(buildingComponent == null) return;
+		// if the building cannot be destroyed then leave method.
+		if (!gridManager.CanDestroyBuilding(buildingComponent)) return;
 		
 		//refund the resources of the selected building.
 		currentlyUsedResourceCount -= buildingComponent.BuildingResource.ResourceCost;

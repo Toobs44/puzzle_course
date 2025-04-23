@@ -35,6 +35,7 @@ public partial class GridManager : Node
 
 	private List<TileMapLayer> allTilemaplayers = new();
 	private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = new();
+	private Dictionary<BuildingComponent, HashSet<Vector2I>> buildingToBuildableTiles = new();
 
     public override void _Ready()
     {
@@ -190,6 +191,83 @@ public partial class GridManager : Node
 		return new Vector2I((int)tilePostion.X, (int)tilePostion.Y);
 	}
 
+	public bool CanDestroyBuilding(BuildingComponent toDestroyBuildingComponent)
+	{
+		if (toDestroyBuildingComponent.BuildingResource.BuildableRadius > 0)
+		{
+			var dependentBuildings = BuildingComponent.GetValidBuildingComponents(this)
+				.Where((buildingComponent) =>
+				{
+					if (buildingComponent == toDestroyBuildingComponent) return false;
+					if (buildingComponent.BuildingResource.IsBase) return false;
+					var anyTilesInRadius = buildingComponent.GetTileArea().ToTiles()
+						.Any((tilePosition) => buildingToBuildableTiles[toDestroyBuildingComponent].Contains(tilePosition));
+					return  anyTilesInRadius;
+				});
+
+			var allBuildingsStillValid = dependentBuildings.All((dependentBuilding) => 
+			{
+				var tilesforBuilding = dependentBuilding.GetTileArea().ToTiles();
+				return tilesforBuilding.All((tilePosition) =>
+				{
+					var tileIsInSet = buildingToBuildableTiles.Keys
+						.Where((key) => key != toDestroyBuildingComponent && key != dependentBuilding)
+						.Any((BuildingComponent) => buildingToBuildableTiles[BuildingComponent].Contains(tilePosition));
+						return tileIsInSet;
+				});
+			});
+
+			if (!allBuildingsStillValid)
+			{
+				return false;
+			}
+
+			return IsBuildingNetworkConnected(toDestroyBuildingComponent);
+		}
+		return true;
+	}
+
+	private bool IsBuildingNetworkConnected(BuildingComponent toDestroyBuildingComponent)
+	{
+		var baseBuilding = BuildingComponent.GetValidBuildingComponents(this)
+			.First((buildingComponent) => buildingComponent.BuildingResource.IsBase);
+
+		var visitedBuildings = new HashSet<BuildingComponent>();
+		VisitAllConnectedBuildings(baseBuilding, toDestroyBuildingComponent, visitedBuildings);
+
+		var totalBuildingsToVisit = BuildingComponent.GetValidBuildingComponents(this)
+			.Count((buildingComponent) => 
+			{
+				return buildingComponent != toDestroyBuildingComponent && buildingComponent.BuildingResource.BuildableRadius > 0;
+			});
+
+		return totalBuildingsToVisit == visitedBuildings.Count;
+	}
+
+	private void VisitAllConnectedBuildings(BuildingComponent rootBuilding, BuildingComponent excludeBuilding, HashSet<BuildingComponent> visitedBuildings)
+	{
+		var dependentBuildings = BuildingComponent.GetValidBuildingComponents(this)
+			.Where((buildingComponent) =>
+			{
+				//dependentBuildings should have a Buildable radius greater than 0
+				if (buildingComponent.BuildingResource.BuildableRadius == 0) return false;
+				// ignore buildings already checked to avoid endless loop
+				if (visitedBuildings.Contains(buildingComponent)) return false;
+
+				var anyTilesInRadius = buildingComponent.GetTileArea().ToTiles()
+					.Any((tilePosition) => buildingToBuildableTiles[rootBuilding].Contains(tilePosition));
+				return buildingComponent != excludeBuilding && anyTilesInRadius;
+			}).ToList();
+		
+		visitedBuildings.UnionWith(dependentBuildings);
+
+		// use recursion to work through all the building with the updated arguments
+		foreach (var dependentBuilding in dependentBuildings)
+		{
+			VisitAllConnectedBuildings(dependentBuilding, excludeBuilding, visitedBuildings);
+		}
+	}
+
 	private HashSet<Vector2I>GetBuildableTileSet(bool isAttackTiles = false)
 	{
 		return isAttackTiles ? validBuildableAttackTiles : validBuildableTiles;
@@ -250,11 +328,17 @@ public partial class GridManager : Node
 		occupiedTiles.UnionWith(buildingComponent.GetOccupiedCellPositions());
 		var tileArea = buildingComponent.GetTileArea();
 
-		var allTiles = GetTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildableRadius, (_) => true);
-		allTilesInBuildingRadius.UnionWith(allTiles);
 
-		var validTiles = GetValidTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildableRadius);
-		validBuildableTiles.UnionWith(validTiles);//union let the user add a collection of tiles to the hash instead of just one cell
+		if (buildingComponent.BuildingResource.BuildableRadius > 0)
+		{
+			var allTiles = GetTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildableRadius, (_) => true);
+			allTilesInBuildingRadius.UnionWith(allTiles);
+
+			var validTiles = GetValidTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildableRadius);
+			buildingToBuildableTiles[buildingComponent] = validTiles.ToHashSet();
+			validBuildableTiles.UnionWith(validTiles);//union let the user add a collection of tiles to the hash instead of just one cell
+		}
+
 		validBuildableTiles.ExceptWith(occupiedTiles);//remove any tiles that are currently occupied from the valid list of buildable tiles.
 	 	validBuildableAttackTiles.UnionWith(validBuildableTiles);
 
@@ -296,6 +380,7 @@ public partial class GridManager : Node
 		collectedResourseTiles.Clear();//clear resources that have been gained
 		goblinOccupiedTiles.Clear();
 		attackTiles.Clear();
+		buildingToBuildableTiles.Clear();//reset when ever we clear a building.
 		
 		
 		var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);

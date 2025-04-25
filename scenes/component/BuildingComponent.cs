@@ -33,6 +33,12 @@ public partial class BuildingComponent : Node2D
 			.Where((buildingComponent) => buildingComponent.BuildingResource.IsDangerBuilding());
 	}
 
+	public static IEnumerable<BuildingComponent> GetNonDangerBuildingComponents(Node node)
+	{
+		return GetValidBuildingComponents(node)
+			.Where((buildingComponent) => !buildingComponent.BuildingResource.IsDangerBuilding());
+	}
+
 	public override void _Ready()
 	{
 		if (buildingResourcePath != null)
@@ -52,9 +58,9 @@ public partial class BuildingComponent : Node2D
 
 	public Vector2I	GetGridCellPosition()
 	{
-		var gridPostion = GlobalPosition / 64;
-		gridPostion = gridPostion.Floor();
-		return new Vector2I((int)gridPostion.X, (int)gridPostion.Y);
+		var gridPosition = GlobalPosition / 64;
+		gridPosition = gridPosition.Floor();
+		return new Vector2I((int)gridPosition.X, (int)gridPosition.Y);
 	}
 
 	public HashSet<Vector2I> GetOccupiedCellPositions()
@@ -69,7 +75,7 @@ public partial class BuildingComponent : Node2D
 		return tileArea;
 	}
 
-	public bool IsTileInBuildngArea(Vector2I tilePosition)
+	public bool IsTileInBuildingArea(Vector2I tilePosition)
 	{
 		return occupiedTiles.Contains(tilePosition);
 	}

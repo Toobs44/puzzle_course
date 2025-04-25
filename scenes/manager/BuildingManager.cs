@@ -175,7 +175,7 @@ public partial class BuildingManager : Node
 			//then returns the first element of that list or a null.
 			.FirstOrDefault((buildingComponent) => 
 			{
-				return buildingComponent.BuildingResource.IsDeletable && buildingComponent.IsTileInBuildngArea(rootCell);
+				return buildingComponent.BuildingResource.IsDeletable && buildingComponent.IsTileInBuildingArea(rootCell);
 			});
 		//if there is no building component(null) then leave method.
 		if(buildingComponent == null) return;

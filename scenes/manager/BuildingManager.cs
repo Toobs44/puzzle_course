@@ -122,13 +122,13 @@ public partial class BuildingManager : Node
 		if (toPlaceBuildingResource.IsAttackBuilding())
 		{
 			//call these highlighted tiles in this order to see where the barracks can attack.
-			gridManager.HighlightGoblinOccupiedTiles();
+			gridManager.HighlightDangerOccupiedTiles();
 			gridManager.HighlightBuildabletiles(true);
 		}
 		else
 		{
 			gridManager.HighlightBuildabletiles();
-			gridManager.HighlightGoblinOccupiedTiles();
+			gridManager.HighlightDangerOccupiedTiles();
 		}
 
 		if(IsBuildingPlaceableAtArea(hoveredGridArea))

@@ -53,6 +53,6 @@ buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 position = Vector2(64, 96)
 sprite_frames = SubResource("SpriteFrames_8ugxn")
 autoplay = "default"
-frame_progress = 0.812272
+frame_progress = 0.468238
 centered = false
 offset = Vector2(-128, -160)

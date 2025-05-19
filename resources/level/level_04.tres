@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_tj12n")
 Id = "wow_island_hopping"
-StartingResourceCount = 100
+StartingResourceCount = 5
 LevelScenePath = "res://scenes/level/Level4.tscn"

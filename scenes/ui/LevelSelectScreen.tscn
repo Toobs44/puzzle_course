@@ -16,24 +16,59 @@ theme_override_constants/margin_bottom = 16
 script = ExtResource("1_jxpwk")
 levelSelectSectionScene = ExtResource("1_4hvoo")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="PreviousPageButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+text = "Previous Page"
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
-columns = 4
+columns = 3
+
+[node name="LevelSelectSection" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_4hvoo")]
+layout_mode = 2
+
+[node name="LevelSelectSection2" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_4hvoo")]
+layout_mode = 2
+
+[node name="LevelSelectSection3" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_4hvoo")]
+layout_mode = 2
+
+[node name="LevelSelectSection4" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_4hvoo")]
+layout_mode = 2
+
+[node name="LevelSelectSection5" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_4hvoo")]
+layout_mode = 2
+
+[node name="LevelSelectSection6" parent="HBoxContainer/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("1_4hvoo")]
+layout_mode = 2
+
+[node name="NextPageButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+text = "Next Page"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 2

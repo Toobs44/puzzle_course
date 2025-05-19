@@ -55,6 +55,6 @@ unique_name_in_owner = true
 metadata/_edit_group_ = true
 
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="."]
-modulate = Color(1, 1, 1, 0.490196)
+modulate = Color(1, 1, 1, 0.705882)
 y_sort_enabled = true
 tile_set = ExtResource("2_gd3dq")

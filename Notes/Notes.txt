@@ -1,0 +1,2 @@
+for island hopping the player needs to place a tower at the bottom
+ then a village near the tree line. At that point the player should have enough wood.

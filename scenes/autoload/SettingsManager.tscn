@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxliub0khf3mq"]
+
+[ext_resource type="Script" uid="uid://nq64g4f0vksr" path="res://scenes/autoload/SettingsManager.cs" id="1_y66g1"]
+
+[node name="Settings Manager" type="Node"]
+script = ExtResource("1_y66g1")

@@ -15,7 +15,7 @@ public partial class GridManager : Node
 	private const string IS_IGNORED = "is_ignored";
 
 	[Signal]
-	public delegate void ResourceTilesUpdateEventHandler( int collectedTiles);
+	public delegate void ResourceTilesUpdatedEventHandler( int collectedTiles);
 	[Signal]
 	public delegate void GridStateUpdatedEventHandler();
 
@@ -207,6 +207,11 @@ public partial class GridManager : Node
 		return true;
 	}
 
+	public HashSet<Vector2I> GetCollectedResourceTiles()
+	{
+		return collectedResourceTiles.ToHashSet();
+	}
+
 	private bool CanDestroyBarracks(BuildingComponent toDestroyBuildingComponent)
 	{
 		var disabledDangerBuilding = BuildingComponent.GetDangerBuildingComponents(this)
@@ -214,7 +219,7 @@ public partial class GridManager : Node
 			{
 				return attackBuildingToTiles[toDestroyBuildingComponent].Contains(tilePosition);
 			}));
-		
+
 		if (!disabledDangerBuilding.Any()) return true;
 
 		var allDangerBuildingsStillDisabled = disabledDangerBuilding.All((dangerBuilding) =>
@@ -413,7 +418,7 @@ public partial class GridManager : Node
 
 		if(oldResourceTileCount != collectedResourceTiles.Count)
 		{
-			EmitSignal(SignalName.ResourceTilesUpdate, collectedResourceTiles.Count);
+			EmitSignal(SignalName.ResourceTilesUpdated, collectedResourceTiles.Count);
 		}
 		//emit signal about the change in tiles for win condition
 		EmitSignal(SignalName.GridStateUpdated);
@@ -453,7 +458,7 @@ public partial class GridManager : Node
 		CheckDangerBuildingDestruction();
 
 		//tells game to check resource count.
-		EmitSignal(SignalName.ResourceTilesUpdate, collectedResourceTiles.Count);
+		EmitSignal(SignalName.ResourceTilesUpdated, collectedResourceTiles.Count);
 		//emit signal about the change in tiles for win condition
 		EmitSignal(SignalName.GridStateUpdated);
 	}

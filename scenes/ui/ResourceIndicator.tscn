@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://bgy32jwl84rsq"]
+
+[ext_resource type="Script" uid="uid://cl4xhluk505vp" path="res://scenes/ui/ResourceIndicator.cs" id="1_4cthv"]
+[ext_resource type="Texture2D" uid="uid://ckugqlww64o81" path="res://assests/ui/wood_spawn.png" id="1_vgp4v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cthv"]
+atlas = ExtResource("1_vgp4v")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2o6v"]
+atlas = ExtResource("1_vgp4v")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbf5e"]
+atlas = ExtResource("1_vgp4v")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdxup"]
+atlas = ExtResource("1_vgp4v")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rddgq"]
+atlas = ExtResource("1_vgp4v")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y6sf"]
+atlas = ExtResource("1_vgp4v")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqrd5"]
+atlas = ExtResource("1_vgp4v")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0qx8n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cthv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2o6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbf5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdxup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rddgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3y6sf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqrd5")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="ResourceIndicator" type="Node2D"]
+script = ExtResource("1_4cthv")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(32, 10)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_0qx8n")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0

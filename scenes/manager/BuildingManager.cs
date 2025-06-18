@@ -46,7 +46,7 @@ public partial class BuildingManager : Node
 
 	public override void _Ready()
 	{
-		gridManager.ResourceTilesUpdate += OnResourceTilesUpdated;
+		gridManager.ResourceTilesUpdated += OnResourceTilesUpdated;
 		gameUI.BuildingResourceSelected += OnBuildingResourceSelected;
 
 		//this signal will wait to be called after the last ready so it can be used by the GameUI node.

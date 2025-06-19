@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qyjjynd5yo77"]
+[gd_scene load_steps=17 format=3 uid="uid://qyjjynd5yo77"]
 
 [ext_resource type="Script" uid="uid://luoqiodrvxhw" path="res://scenes/level/BaseLevel.cs" id="1_0j8cf"]
 [ext_resource type="TileSet" uid="uid://eifde3cn58kh" path="res://resources/highlight_tileset.tres" id="2_gd3dq"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dcaoxujsbxmvb" path="res://scenes/building/BuildingGhost.tscn" id="8_60uun"]
 [ext_resource type="Resource" uid="uid://by1xyqkwyb2eb" path="res://resources/building/tower.tres" id="8_lsbhc"]
 [ext_resource type="Resource" uid="uid://bmsasqgkokkcl" path="res://resources/building/barracks.tres" id="9_udnuu"]
+[ext_resource type="PackedScene" uid="uid://xwukx0o3jwbv" path="res://scenes/manager/FloatingTextManager.tscn" id="16_udnuu"]
 
 [node name="BaseLevel" type="Node"]
 script = ExtResource("1_0j8cf")
@@ -60,5 +61,7 @@ modulate = Color(1, 1, 1, 0.705882)
 y_sort_enabled = true
 tile_set = ExtResource("2_gd3dq")
 
-[node name="ResourceIndicatorManager" parent="YSortRoot" node_paths=PackedStringArray("gridManager") instance=ExtResource("5_lsbhc")]
-gridManager = NodePath("../../GridManager")
+[node name="ResourceIndicatorManager" parent="." node_paths=PackedStringArray("gridManager") instance=ExtResource("5_lsbhc")]
+gridManager = NodePath("../GridManager")
+
+[node name="FloatingTextManager" parent="." instance=ExtResource("16_udnuu")]

@@ -70,11 +70,7 @@ public partial class BuildingManager : Node
 				{
 					ChangeState(State.Normal);
 				}
-				else if (
-					toPlaceBuildingResource != null &&
-					evt.IsActionPressed(ACTION_LEFT_CLICK) &&
-					IsBuildingPlaceableAtArea(hoveredGridArea)
-					)
+				else if (toPlaceBuildingResource != null && evt.IsActionPressed(ACTION_LEFT_CLICK))
 				{
 					PlaceBuildingAtHoveredCellPosition();
 					
@@ -156,6 +152,18 @@ public partial class BuildingManager : Node
 
 	private void PlaceBuildingAtHoveredCellPosition()
 	{
+		if (!CanAffordBuilding())
+		{
+			FloatingTextManager.ShowMessage("Can't Afford!");
+			return;
+		}
+
+		if (!IsBuildingPlaceableAtArea(hoveredGridArea))
+		{
+			FloatingTextManager.ShowMessage("Invalid Placement!");
+			return;
+		}
+
 		var building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
 		ySortRoot.AddChild(building);
 
@@ -180,7 +188,11 @@ public partial class BuildingManager : Node
 		//if there is no building component(null) then leave method.
 		if(buildingComponent == null) return;
 		// if the building cannot be destroyed then leave method.
-		if (!gridManager.CanDestroyBuilding(buildingComponent)) return;
+		if (!gridManager.CanDestroyBuilding(buildingComponent))
+		{
+			FloatingTextManager.ShowMessage("Cant't destroy!");
+			return;		
+		}
 		
 		//refund the resources of the selected building.
 		currentlyUsedResourceCount -= buildingComponent.BuildingResource.ResourceCost;
@@ -201,12 +213,18 @@ public partial class BuildingManager : Node
 		buildingGhost = null;
 	}
 
+	private bool CanAffordBuilding()
+	{
+		return AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
+
+	}
+
 	private bool IsBuildingPlaceableAtArea(Rect2I tileArea)
 	{
 		var isAttackTiles = toPlaceBuildingResource.IsAttackBuilding();
 		//go through tilePostions and get true or false for position buildable.
 		var allTilesBuildable = gridManager.IsTileAreaBuildable(tileArea, isAttackTiles);
-		return allTilesBuildable && AvailableResourceCount >= toPlaceBuildingResource.ResourceCost;
+		return allTilesBuildable && CanAffordBuilding();
 	}
 
 

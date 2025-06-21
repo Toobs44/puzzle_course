@@ -482,8 +482,8 @@ public partial class GridManager : Node
 			var isInsideAttackTile = tileArea.ToTiles().Any((tilePosition) => attackTiles.Contains(tilePosition));
 			if (isInsideAttackTile)
 			{
-				building.Disable();
-			} 
+				building.Disable();			
+			}
 			else
 			{
 				building.Enable();

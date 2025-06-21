@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://bkaha62poaby1"]
+[gd_scene load_steps=6 format=4 uid="uid://bkaha62poaby1"]
 
 [ext_resource type="PackedScene" uid="uid://qyjjynd5yo77" path="res://scenes/level/BaseLevel.tscn" id="1_fv04k"]
-[ext_resource type="Resource" uid="uid://dbld6j64fm438" path="res://resources/level/level_04.tres" id="2_oevvk"]
+[ext_resource type="Resource" uid="uid://nd3mudybrkyr" path="res://resources/level/level_05.tres" id="2_oevvk"]
 [ext_resource type="TileSet" uid="uid://cbm7g320lgtcm" path="res://resources/tiles.tres" id="3_1tum2"]
 [ext_resource type="PackedScene" uid="uid://6l5wyg6sdkbu" path="res://scenes/level/util/ElevationLayer.tscn" id="4_jdmlx"]
+[ext_resource type="PackedScene" uid="uid://deu4ah0pw34dk" path="res://scenes/building/GoblinCamp.tscn" id="5_oevvk"]
 
 [node name="Level4" instance=ExtResource("1_fv04k")]
 levelDefinitionResource = ExtResource("2_oevvk")
@@ -40,7 +41,7 @@ tile_set = ExtResource("3_1tum2")
 
 [node name="TreeLayer" type="TileMapLayer" parent="YSortRoot/BaseTerrainTileMapLayer" index="3"]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAARAAEAAQAAAAAAAAASAAIAAQAAAAAAAAARAAIAAQAAAAAAAAASAAMAAQAAAAAAAAASAAQAAQAAAAAAAAATAAUAAQAAAAAAAAASAAYAAQAAAAAAAAATAAcAAQAAAAAAAAATAAYAAQAAAAAAAAARAAYAAQAAAAAAAAARAAMAAQAAAAAAAAARAAcAAQAAAAAAAAD5/wUAAQAAAAAAAAD5/wQAAQAAAAAAAAD6/wQAAQAAAAAAAAAEAAEAAQAAAAAAAAABAAAAAQAAAAAAAAD6/wYAAQAAAAAAAAD7/wYAAQAAAAAAAAD8/wcAAQAAAAAAAAABAAwAAQAAAAAAAAACAAsAAQAAAAAAAAAGAAsAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAARAAEAAQAAAAAAAAASAAIAAQAAAAAAAAARAAIAAQAAAAAAAAASAAMAAQAAAAAAAAASAAQAAQAAAAAAAAATAAUAAQAAAAAAAAASAAYAAQAAAAAAAAATAAYAAQAAAAAAAAARAAYAAQAAAAAAAAARAAMAAQAAAAAAAAARAAcAAQAAAAAAAAD5/wUAAQAAAAAAAAD5/wQAAQAAAAAAAAD6/wQAAQAAAAAAAAAEAAEAAQAAAAAAAAABAAAAAQAAAAAAAAD6/wYAAQAAAAAAAAD7/wYAAQAAAAAAAAD8/wcAAQAAAAAAAAABAAwAAQAAAAAAAAACAAsAAQAAAAAAAAAGAAsAAQAAAAAAAAACAAAAAQAAAAAAAAADAAEAAQAAAAAAAAACAAEAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAADAAAAAQAAAAAAAAATAAcAAQAAAAAAAAA=")
 tile_set = ExtResource("3_1tum2")
 
 [node name="Base" parent="YSortRoot" index="1"]
@@ -48,5 +49,8 @@ position = Vector2(768, 64)
 
 [node name="GoldMine" parent="YSortRoot" index="2"]
 position = Vector2(192, 896)
+
+[node name="GoblinCamp" parent="YSortRoot" index="4" instance=ExtResource("5_oevvk")]
+position = Vector2(-64, 384)
 
 [editable path="YSortRoot/BaseTerrainTileMapLayer/ElevationLayer"]

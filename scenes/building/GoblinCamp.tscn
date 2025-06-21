@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://deu4ah0pw34dk"]
+[gd_scene load_steps=20 format=3 uid="uid://deu4ah0pw34dk"]
 
+[ext_resource type="Script" uid="uid://cjvfrqubduxvp" path="res://scenes/building/GoblinCamp.cs" id="1_7130i"]
 [ext_resource type="PackedScene" uid="uid://kpmu4r416qdu" path="res://scenes/component/BuildingComponent.tscn" id="1_ilohv"]
 [ext_resource type="PackedScene" uid="uid://vkppnh6dp3to" path="res://scenes/component/BuildingAnimatorComponent.tscn" id="2_hfat6"]
 [ext_resource type="Texture2D" uid="uid://c8ghcy13wqgac" path="res://assests/buildings/wood_tower_red.png" id="3_pch1o"]
+[ext_resource type="Texture2D" uid="uid://ct814eapka13i" path="res://assests/buildings/wood_tower_destroyed.png" id="5_tvc5i"]
+[ext_resource type="Texture2D" uid="uid://cvxaj25xfsj81" path="res://assests/effects/fire.png" id="6_m75g8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7130i"]
 atlas = ExtResource("3_pch1o")
@@ -38,10 +41,79 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_tvc5i")
+}],
+"loop": true,
+"name": &"destroyed",
+"speed": 5.0
 }]
 
-[node name="GoblinCamp" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ugxn"]
+atlas = ExtResource("6_m75g8")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gtmp"]
+atlas = ExtResource("6_m75g8")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bd73l"]
+atlas = ExtResource("6_m75g8")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4l1q"]
+atlas = ExtResource("6_m75g8")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pc3f1"]
+atlas = ExtResource("6_m75g8")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhc8b"]
+atlas = ExtResource("6_m75g8")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvflr"]
+atlas = ExtResource("6_m75g8")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o34rk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ugxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8gtmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bd73l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4l1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pc3f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhc8b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvflr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="GoblinCamp" type="Node2D" node_paths=PackedStringArray("buildingComponent", "fireAnimatedSprite2D", "animatedSprite2D")]
 y_sort_enabled = true
+script = ExtResource("1_7130i")
+buildingComponent = NodePath("BuildingComponent")
+fireAnimatedSprite2D = NodePath("BuildingAnimatorComponent/AnimatedSprite2D/FireAnimatedSprite2D")
+animatedSprite2D = NodePath("BuildingAnimatorComponent/AnimatedSprite2D")
 
 [node name="BuildingComponent" parent="." node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_ilohv")]
 buildingResourcePath = "uid://b24stqtv74aex"
@@ -50,9 +122,17 @@ buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 [node name="BuildingAnimatorComponent" parent="." instance=ExtResource("2_hfat6")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent"]
+unique_name_in_owner = true
 position = Vector2(64, 96)
 sprite_frames = SubResource("SpriteFrames_8ugxn")
 autoplay = "default"
-frame_progress = 0.468238
 centered = false
 offset = Vector2(-128, -160)
+
+[node name="FireAnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedSprite2D"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -80)
+sprite_frames = SubResource("SpriteFrames_o34rk")
+autoplay = "default"
+frame_progress = 0.377176

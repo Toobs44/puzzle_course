@@ -24,6 +24,7 @@ LevelManager="*res://scenes/autoload/LevelManager.tscn"
 SaveManager="*res://scenes/autoload/SaveManager.tscn"
 SettingsManager="*res://scenes/autoload/SettingsManager.tscn"
 Cursor="*res://scenes/autoload/Cursor.tscn"
+AudioHelpers="*res://scenes/autoload/AudioHelpers.tscn"
 
 [display]
 

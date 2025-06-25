@@ -434,7 +434,7 @@ public partial class GridManager : Node
 		attackTiles.UnionWith(newAttackTiles);
 	}
 
-	private void RecalculateGrid()
+	private void  RecalculateGrid()
 	{
 		occupiedTiles.Clear();//clear the grid cell that held the building.
 		validBuildableTiles.Clear();//clear all buildable tiles from the grid.

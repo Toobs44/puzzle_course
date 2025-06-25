@@ -58,6 +58,7 @@ metadata/_edit_group_ = true
 
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="YSortRoot"]
 modulate = Color(1, 1, 1, 0.705882)
+top_level = true
 y_sort_enabled = true
 tile_set = ExtResource("2_gd3dq")
 

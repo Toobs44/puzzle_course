@@ -54,14 +54,16 @@ public partial class BuildingComponent : Node2D
 		if (buildingAnimatorComponent != null)
 		{
 			buildingAnimatorComponent.DestroyAnimationFinished += OnDestroyAnimationFinished;
+			buildingAnimatorComponent.DisableAnimationFinished += OnDisabledAnimationFinished;
 		}
+
 
 		AddToGroup(nameof(BuildingComponent));
 		//wait to emit the signal after other functions are done
 		Callable.From(Initialize).CallDeferred();
 	}
 
-	public Vector2I	GetGridCellPosition()
+	public Vector2I GetGridCellPosition()
 	{
 		var gridPosition = GlobalPosition / 64;
 		gridPosition = gridPosition.Floor();
@@ -87,10 +89,10 @@ public partial class BuildingComponent : Node2D
 
 	public void Disable()
 	{
+		GD.Print(IsDisabled);
 		if (IsDisabled) return;// dont waste time emitting if the building is already disabled.
 		IsDisabled = true;
-		EmitSignal(SignalName.Disabled);
-		GameEvents.EmitBuildingDisabled(this);
+		buildingAnimatorComponent?.PlayDisableAnimation();
 	}
 
 	public void Enable()
@@ -99,6 +101,7 @@ public partial class BuildingComponent : Node2D
 		IsDisabled = false;
 		EmitSignal(SignalName.Enabled);
 		GameEvents.EmitBuildingEnabled(this);
+		buildingAnimatorComponent?.PlayInAnimation();
 	}
 
 	public void Destroy()
@@ -106,7 +109,7 @@ public partial class BuildingComponent : Node2D
 		IsDestroying = true;
 		GameEvents.EmitBuildingDestroyed(this);
 		buildingAnimatorComponent?.PlayDestroyAnimation();//using a "Null chain"
-		//find the root of the scene this node is apart of and destroy it along with its children nodes.
+														  //find the root of the scene this node is a part of and destroy it along with its children nodes.
 		if (buildingAnimatorComponent == null)
 		{
 			Owner.QueueFree();
@@ -118,7 +121,7 @@ public partial class BuildingComponent : Node2D
 		var gridPostion = GetGridCellPosition();
 		for (int x = gridPostion.X; x < gridPostion.X + BuildingResource.Dimensions.X; x++)
 		{
-			for(int y = gridPostion.Y; y < gridPostion.Y + BuildingResource.Dimensions.Y; y++)
+			for (int y = gridPostion.Y; y < gridPostion.Y + BuildingResource.Dimensions.Y; y++)
 			{
 				//add the calculated tiles to the hashset list.
 				occupiedTiles.Add(new Vector2I(x, y));
@@ -135,5 +138,12 @@ public partial class BuildingComponent : Node2D
 	private void OnDestroyAnimationFinished()
 	{
 		Owner.QueueFree();
+	}
+
+	private void OnDisabledAnimationFinished()
+	{		
+		GD.Print("OnDisabledAnimationFinished called");
+		GameEvents.EmitBuildingDisabled(this);
+		EmitSignal(SignalName.Disabled);
 	}
 }

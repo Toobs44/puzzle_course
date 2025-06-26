@@ -30,8 +30,11 @@ public partial class LevelSelectScreen : MarginContainer
 		previousPageButton = GetNode<Button>("%PreviousPageButton");
 		nextPageButton = GetNode<Button>("%NextPageButton");
 
+		AudioHelpers.RegisterButtons(new Button[] { backButton, previousPageButton, nextPageButton });
+
 		levelDefinitions = LevelManager.GetLevelDefinitions();
 		maxPageIndex = levelDefinitions.Length / PAGE_SIZE;
+
 
 		backButton.Pressed += OnBackButtonPressed;
 		previousPageButton.Pressed += () => OnPageChanged(-1);

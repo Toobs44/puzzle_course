@@ -1,5 +1,6 @@
 using Godot;
 using Game.Resources.Building;
+using Game.Autoload;
 
 namespace Game.UI;
 
@@ -19,6 +20,8 @@ public partial class BuildingSection : PanelContainer
 		descriptionLabel = GetNode<Label>("%DescriptionLabel");
 		costLabel = GetNode<Label>("%CostLabel");
 		selectButton = GetNode<Button>("%Button");
+
+		AudioHelpers.RegisterButtons(new Button[] { selectButton });
 
 		selectButton.Pressed += OnSelectButtonPressed;
 	}

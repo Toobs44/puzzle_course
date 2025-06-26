@@ -34,6 +34,8 @@ public partial class BaseLevel : Node
 
 		buildingManager.SetStartingResourceCount(levelDefinitionResource.StartingResourceCount);
 
+		gridManager.SetGoldMinePosition(gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition));
+
 		//set the camera limit to rect used in the base terrain layer. For most of this game, thats the shape of the water.
 		gameCamera.SetBoundingRect(baseTerrainTilemapLayer.GetUsedRect());
 		//center camera on the base building.

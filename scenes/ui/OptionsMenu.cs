@@ -5,6 +5,9 @@ namespace Game.UI;
 
 public partial class OptionsMenu : CanvasLayer
 {
+	[Signal]
+	public delegate void DonePressedEventHandler();
+
 	private const string SFX_BUS_NAME = "SFX";
 	private const string MUSIC_BUS_NAME = "Music";
 
@@ -55,6 +58,7 @@ public partial class OptionsMenu : CanvasLayer
 		};
 
 		windowButton.Pressed += OnWindowButtonPressed;
+		doneButton.Pressed += OnDoneButtonPressed;
 	}
 
 	private void UpdateDisplay()
@@ -76,6 +80,11 @@ public partial class OptionsMenu : CanvasLayer
 	{
 		OptionsHelper.ToggleWindowMode();
 		UpdateDisplay();
+	}
+
+	private void OnDoneButtonPressed()
+	{
+		EmitSignal(SignalName.DonePressed);
 	}
 
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Game.Resources.Level;
 using Godot;
 
@@ -6,38 +7,43 @@ namespace Game.Autoload;
 
 public partial class LevelManager : Node
 {
-	public static LevelManager Instance { get; private set;}
+	private static LevelManager instance;
 
 	[Export]
 	private LevelDefinitionResource[] levelDefinitions;
 
-	private int currentLevelIndex;
+	private static int currentLevelIndex;
 
 	public override void _Notification(int what)
-    {
-        if (what == NotificationSceneInstantiated)
+	{
+		if (what == NotificationSceneInstantiated)
 		{
-			Instance = this;
+			instance = this;
 		}
-    }
+	}
 
-	public static LevelDefinitionResource[] GetLevelDefinitions()
+	public static  LevelDefinitionResource[] GetLevelDefinitions()
 	{
 		//Send a copy of the array for use, this makes sure the original is not modified.
-		return Instance.levelDefinitions.ToArray();
+		return instance.levelDefinitions.ToArray();
 	}
 
-	public void ChangeToLevel(int levelIndex)
+	public static void ChangeToLevel(int levelIndex)
 	{
-		if (levelIndex >= levelDefinitions.Length || levelIndex < 0) return;
+		if (levelIndex >= instance.levelDefinitions.Length || levelIndex < 0) return;
 		currentLevelIndex = levelIndex;
-		var levelDefinition = levelDefinitions[currentLevelIndex];
-		GetTree().ChangeSceneToFile(levelDefinition.LevelScenePath);
+		var levelDefinition = instance.levelDefinitions[currentLevelIndex];
+		instance.GetTree().ChangeSceneToFile(levelDefinition.LevelScenePath);
 	}
 
-	public void ChangeToNextLevel()
+	public static void ChangeToNextLevel()
 	{
 		ChangeToLevel(currentLevelIndex + 1);
+	}
+
+	public static bool IsLastLevel()
+	{
+		return currentLevelIndex == instance.levelDefinitions.Length - 1;
 	}
 
 }

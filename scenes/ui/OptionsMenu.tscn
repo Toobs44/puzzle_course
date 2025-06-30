@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://duuuiyxavsftg" path="res://scenes/ui/OptionsMenu.cs" id="1_i16wg"]
 
 [node name="OptionsMenu" type="CanvasLayer"]
+layer = 3
 script = ExtResource("1_i16wg")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

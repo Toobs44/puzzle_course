@@ -65,7 +65,7 @@ public partial class OptionsMenu : CanvasLayer
 	{
 		sfxLabel.Text = Mathf.Round(OptionsHelper.GetBusVolumePercent(SFX_BUS_NAME) * 10).ToString();
 		musicLabel.Text = Mathf.Round(OptionsHelper.GetBusVolumePercent(MUSIC_BUS_NAME) * 10).ToString();
-		windowButton.Text = OptionsHelper.IsFullscreen() ? "Fullsreen" : "Windowed";
+		windowButton.Text = OptionsHelper.IsFullscreen() ? "Windowed" : "Fullsreen";
 	}
 
 	private void ChangeBusVolume(string busName, float change)

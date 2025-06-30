@@ -60,20 +60,22 @@ public partial class BuildingManager : Node
 		switch (currentState)
 		{
 			case State.Normal:
-				if(evt.IsActionPressed(ACTION_RIGHT_CLICK))
+				if (evt.IsActionPressed(ACTION_RIGHT_CLICK))
 				{
 					DestroyBuildingAtHoveredCellPosition();
+					GetViewport().SetInputAsHandled();
 				}
 				break;
 			case State.PlaceingBuilding:
 				if (evt.IsActionPressed(ACTION_CANCEL))
 				{
 					ChangeState(State.Normal);
+					GetViewport().SetInputAsHandled();
 				}
 				else if (toPlaceBuildingResource != null && evt.IsActionPressed(ACTION_LEFT_CLICK))
 				{
 					PlaceBuildingAtHoveredCellPosition();
-					
+					GetViewport().SetInputAsHandled();
 				}
 				break;
 			default:

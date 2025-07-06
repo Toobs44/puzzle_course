@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://dlb0m1kapmebo"]
+[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://dju8n0qw4ft8m"]
 
-[ext_resource type="Script" uid="uid://d00qojepm82od" path="res://resources/level/LevelDefinitionResource.cs" id="1_pnr8f"]
+[ext_resource type="Script" uid="uid://d00qojepm82od" path="res://resources/level/LevelDefinitionResource.cs" id="1_glhk7"]
 
 [resource]
-script = ExtResource("1_pnr8f")
-Id = "on_stone_no_build"
-StartingResourceCount = 6
-LevelScenePath = "res://scenes/level/Level3.tscn"
+script = ExtResource("1_glhk7")
+Id = "Through_the_river_around_the_woods"
+StartingResourceCount = 16
+LevelScenePath = "uid://ua6ac3psv3b3"
+metadata/_custom_type_script = "uid://d00qojepm82od"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://dbld6j64fm438"]
+
+[ext_resource type="Script" uid="uid://d00qojepm82od" path="res://resources/level/LevelDefinitionResource.cs" id="1_cx5wl"]
+
+[resource]
+script = ExtResource("1_cx5wl")
+Id = "wow_island_hopping"
+StartingResourceCount = 5
+LevelScenePath = "uid://b04u6f0ov0f5y"

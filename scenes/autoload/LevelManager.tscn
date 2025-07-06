@@ -1,12 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5o4mh14cuv3c"]
+[gd_scene load_steps=12 format=3 uid="uid://c5o4mh14cuv3c"]
 
 [ext_resource type="Script" uid="uid://47cyn2145xwq" path="res://scenes/autoload/LevelManager.cs" id="1_vpyc2"]
 [ext_resource type="Resource" uid="uid://d3lyx2j435k6r" path="res://resources/level/level_01.tres" id="2_6l8b8"]
-[ext_resource type="Resource" uid="uid://bab4bfsxj4d4h" path="res://resources/level/level_02.tres" id="3_vyl12"]
-[ext_resource type="Resource" uid="uid://dlb0m1kapmebo" path="res://resources/level/level_03.tres" id="4_n056a"]
-[ext_resource type="Resource" uid="uid://dbld6j64fm438" path="res://resources/level/level_04.tres" id="5_7wsgy"]
-[ext_resource type="Resource" uid="uid://nd3mudybrkyr" path="res://resources/level/level_05.tres" id="6_cuxrr"]
+[ext_resource type="Resource" uid="uid://gqcysuklulq4" path="res://resources/level/level_02.tres" id="3_lpx0a"]
+[ext_resource type="Resource" uid="uid://bab4bfsxj4d4h" path="res://resources/level/level_04.tres" id="3_vyl12"]
+[ext_resource type="Resource" uid="uid://dju8n0qw4ft8m" path="res://resources/level/level_03.tres" id="4_axni3"]
+[ext_resource type="Resource" uid="uid://dlb0m1kapmebo" path="res://resources/level/level_05.tres" id="4_n056a"]
+[ext_resource type="Resource" uid="uid://dbld6j64fm438" path="res://resources/level/level_06.tres" id="5_7wsgy"]
+[ext_resource type="Resource" uid="uid://nd3mudybrkyr" path="res://resources/level/level_09.tres" id="6_cuxrr"]
+[ext_resource type="Resource" uid="uid://3rph6vvflr1" path="res://resources/level/level_07.tres" id="8_bhhst"]
+[ext_resource type="Resource" uid="uid://ch4xt6ish21x" path="res://resources/level/level_08.tres" id="9_ds25j"]
+[ext_resource type="Resource" uid="uid://dx7o1i0l851g2" path="res://resources/level/level_10.tres" id="11_5qfms"]
 
 [node name="LevelManager" type="Node"]
 script = ExtResource("1_vpyc2")
-levelDefinitions = Array[Object]([ExtResource("2_6l8b8"), ExtResource("3_vyl12"), ExtResource("4_n056a"), ExtResource("5_7wsgy"), ExtResource("6_cuxrr")])
+levelDefinitions = Array[Object]([ExtResource("2_6l8b8"), ExtResource("3_lpx0a"), ExtResource("4_axni3"), ExtResource("3_vyl12"), ExtResource("4_n056a"), ExtResource("5_7wsgy"), ExtResource("8_bhhst"), ExtResource("9_ds25j"), ExtResource("6_cuxrr"), ExtResource("11_5qfms")])

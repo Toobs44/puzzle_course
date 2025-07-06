@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://nd3mudybrkyr"]
+[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://dlb0m1kapmebo"]
 
-[ext_resource type="Script" uid="uid://d00qojepm82od" path="res://resources/level/LevelDefinitionResource.cs" id="1_eeyqf"]
+[ext_resource type="Script" uid="uid://d00qojepm82od" path="res://resources/level/LevelDefinitionResource.cs" id="1_cx5wl"]
 
 [resource]
-script = ExtResource("1_eeyqf")
-Id = "a_hop_and_a_goblin"
+script = ExtResource("1_cx5wl")
+Id = "on_stone_no_build"
 StartingResourceCount = 6
-LevelScenePath = "uid://bkaha62poaby1"
-metadata/_custom_type_script = "uid://d00qojepm82od"
+LevelScenePath = "uid://b3rdsi32qj55p"

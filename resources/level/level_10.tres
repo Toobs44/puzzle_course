@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://dx7o1i0l851g2"]
+
+[ext_resource type="Script" uid="uid://d00qojepm82od" path="res://resources/level/LevelDefinitionResource.cs" id="1_x3m5f"]
+
+[resource]
+script = ExtResource("1_x3m5f")
+Id = ""
+StartingResourceCount = 2
+LevelScenePath = "uid://di868rrnxrsvx"
+metadata/_custom_type_script = "uid://d00qojepm82od"

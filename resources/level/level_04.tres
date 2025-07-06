@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://dbld6j64fm438"]
+[gd_resource type="Resource" script_class="LevelDefinitionResource" load_steps=2 format=3 uid="uid://bab4bfsxj4d4h"]
 
 [ext_resource type="Script" uid="uid://d00qojepm82od" path="res://resources/level/LevelDefinitionResource.cs" id="1_tj12n"]
 
 [resource]
 script = ExtResource("1_tj12n")
-Id = "wow_island_hopping"
-StartingResourceCount = 5
-LevelScenePath = "res://scenes/level/Level4.tscn"
+Id = "new_feature_cabin"
+StartingResourceCount = 2
+LevelScenePath = "uid://dve2ycubitpsg"

@@ -18,7 +18,6 @@ public partial class OptionsHelper : Node
 	public static void SetBusVolumePercent(string busName, float volumePercent)
 	{
 		var busIndex = AudioServer.GetBusIndex(busName);
-		GD.Print($"adjusting audio for {busName} to {volumePercent}");
 		AudioServer.SetBusVolumeDb(busIndex, Mathf.LinearToDb(volumePercent));
 		SaveManager.SaveAudioBusVolume(busName, volumePercent);
 	}
@@ -52,12 +51,10 @@ public partial class OptionsHelper : Node
 	{
 		if (SaveManager.IsSavedWindowFull())
 		{
-			GD.Print($"IsFullScreen = {SaveManager.IsSavedWindowFull()}");
 			DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
 		}
 		else
 		{
-			GD.Print($"IsFullScreen = {SaveManager.IsSavedWindowFull()}");
 			DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
 		}
 	}

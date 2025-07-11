@@ -59,11 +59,8 @@ public partial class SaveManager : Node
 
     private void GetAudioSettings()
     {
-    	GD.Print("LoadAudioSettings called");
     	var sfxValue = GetLoadedBusVolume("SFX");
-    	GD.Print($"Sending SFX value of {sfxValue} to SetBusVolumePercent");
     	var musicValue = GetLoadedBusVolume("Music");
-    	GD.Print($"Sending Music value of {musicValue} to SetBusVolumePercent");
     	OptionsHelper.SetBusVolumePercent("SFX", sfxValue);
     	OptionsHelper.SetBusVolumePercent("Music", musicValue);
     }

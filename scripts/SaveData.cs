@@ -44,7 +44,6 @@ public class SaveData
         if (!WindowMode.ContainsKey("IsFullScreen"))
             WindowMode["IsFullScreen"] = new();
         WindowMode["IsFullScreen"] = isFullScreen;
-        // IsFullScreen = isFullScreen;
     }
 
 }

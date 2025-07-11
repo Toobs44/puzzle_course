@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://b04u6f0ov0f5y"]
 
 [ext_resource type="PackedScene" uid="uid://qyjjynd5yo77" path="res://scenes/level/BaseLevel.tscn" id="1_tv58x"]
-[ext_resource type="Resource" uid="uid://dbld6j64fm438" path="res://resources/level/level_06.tres" id="2_dyrhq"]
+[ext_resource type="Resource" uid="uid://dyoicaac7nska" path="res://resources/level/level_06.tres" id="2_dyrhq"]
 [ext_resource type="TileSet" uid="uid://cbm7g320lgtcm" path="res://resources/tiles.tres" id="3_crlrk"]
 [ext_resource type="Resource" uid="uid://cbluc2kej2wog" path="res://resources/building/village.tres" id="3_dyrhq"]
 [ext_resource type="PackedScene" uid="uid://6l5wyg6sdkbu" path="res://scenes/level/util/ElevationLayer.tscn" id="4_crlrk"]

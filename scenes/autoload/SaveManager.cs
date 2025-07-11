@@ -17,6 +17,7 @@ public partial class SaveManager : Node
         {
             Instance = this;
             LoadSaveData();
+            GetAudioSettings();
         }
     }
 
@@ -27,10 +28,64 @@ public partial class SaveManager : Node
         return data?.IsCompleted == true;
     }
 
+    public static bool IsSavedWindowFull()
+    {
+        saveData.WindowMode.TryGetValue("IsFullScreen", out var data);
+        return data;
+    }
+
     public static void SaveLevelCompletion(LevelDefinitionResource levelDefinitionResource)
     {
         saveData.SaveLevelCompletion(levelDefinitionResource.Id, true);
         WriteSaveData();
+    }
+
+    public static void SaveWindowMode(string windowMode)
+    {
+        GD.Print($"window mode selected: {windowMode}");
+        if (windowMode == "Windowed")
+            saveData.SaveWindowMode(false);
+        if (windowMode == "ExclusiveFullscreen")
+            saveData.SaveWindowMode(true);
+        WriteSaveData();
+    }
+
+    public static void SaveAudioBusVolume(string busName, float value)
+    {
+        saveData.SaveAudioBusValue(busName, value);
+        WriteSaveData();
+    }
+
+
+    private void GetAudioSettings()
+    {
+    	GD.Print("LoadAudioSettings called");
+    	var sfxValue = GetLoadedBusVolume("SFX");
+    	GD.Print($"Sending SFX value of {sfxValue} to SetBusVolumePercent");
+    	var musicValue = GetLoadedBusVolume("Music");
+    	GD.Print($"Sending Music value of {musicValue} to SetBusVolumePercent");
+    	OptionsHelper.SetBusVolumePercent("SFX", sfxValue);
+    	OptionsHelper.SetBusVolumePercent("Music", musicValue);
+    }
+    
+    public static float GetLoadedBusVolume(string busName)
+    {
+        GD.Print($"GetAudioBusVolume called with the bus name of {busName}");
+        if (saveData.SFXBusValue.ContainsKey(busName))
+        {
+            saveData.SFXBusValue.TryGetValue(busName, out var value);
+            return value;
+        }
+        else if (saveData.MusicBusValue.ContainsKey(busName))
+        {
+            saveData.MusicBusValue.TryGetValue(busName, out var value);
+            return value;
+        }
+        else
+        {
+            GD.Print("Non found setting default");
+            return 0.5f;
+        }
     }
 
     private static void WriteSaveData()

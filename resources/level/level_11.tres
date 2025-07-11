@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_te3ed")
-Id = ""
+Id = "up_or_around_the_river"
 StartingResourceCount = 4
 LevelScenePath = "uid://do3h3xgsbsi77"
 metadata/_custom_type_script = "uid://d00qojepm82od"

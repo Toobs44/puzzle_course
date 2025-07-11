@@ -37,6 +37,7 @@ public partial class OptionsMenu : CanvasLayer
 			sfxUpButton, sfxDownButton, musicDownButton, musicUpButton, windowButton, doneButton
 		});
 
+		//How exactly should I load the data and then use it
 		UpdateDisplay();
 
 		sfxUpButton.Pressed += () =>
@@ -59,6 +60,7 @@ public partial class OptionsMenu : CanvasLayer
 
 		windowButton.Pressed += OnWindowButtonPressed;
 		doneButton.Pressed += OnDoneButtonPressed;
+
 	}
 
 	private void UpdateDisplay()
@@ -67,6 +69,8 @@ public partial class OptionsMenu : CanvasLayer
 		musicLabel.Text = Mathf.Round(OptionsHelper.GetBusVolumePercent(MUSIC_BUS_NAME) * 10).ToString();
 		windowButton.Text = OptionsHelper.IsFullscreen() ? "Windowed" : "Fullsreen";
 	}
+
+
 
 	private void ChangeBusVolume(string busName, float change)
 	{
